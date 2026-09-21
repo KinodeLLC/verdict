@@ -146,6 +146,9 @@ class VerdictParser(Parser):
             d.outcome_type = "Unknown"
 
         while True:
+            # Doc comments may sit between clauses, so they are skipped each
+            # time round rather than ending the clause list.
+            self.skip_docs()
             if self.cur.is_kw("intent"):
                 self.next()
                 d.intent = self.parse_text_literal("an intent description")
