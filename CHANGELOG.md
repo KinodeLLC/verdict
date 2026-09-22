@@ -1,16 +1,13 @@
 # Changelog
 
-Keep a Changelog format, SemVer. Pre-1.0: breaking changes bump the minor.
+keep a changelog format, semver. before 1.0 a breaking change bumps the minor.
 
 ## [Unreleased]
 
 ## [0.1.0] - 2026-09-21
 
 ### Added
-- Decisions with factors, weighted rules and a required default outcome.
-- Mandatory reasons: a rule, a factor or a default without a stated basis does
-  not compile.
-- Prohibited factors enforced by reachability, including through factors, with
-  the route named in the diagnostic.
-- Lowering to a result record carrying outcome, reasons and every factor
-  considered, with contracts and the `explains` law attached.
+- decisions with factors, weighted rules, required default outcome
+- reasons are mandatory, a rule or factor without one will not compile
+- prohibited factors enforced by reachability, including through factors
+- lowers to a result record with outcome, reasons and factors, plus contracts

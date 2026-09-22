@@ -1,27 +1,24 @@
 """
-Verdict: a decision language for regulated logic.
+verdict, a decision language for regulated logic.
 
-A decision written here cannot compile unless it can explain itself. That is
-the whole point of the language, and it is enforced structurally rather than by
-convention:
+a decision written in here will not compile unless it can explain itself, and
+that is enforced by the structure rather than by anybody agreeing to it.
 
-  * Every rule must state a `because`. A rule without a stated basis is a
-    parse error, not a lint warning.
-  * Every decision must have an `otherwise`, so there is no input for which the
-    system has no answer and no reason.
-  * `prohibited` factors are rejected at compile time if anything in the
-    decision reads them -- directly or through a factor. This is the
-    difference between a policy saying a factor must not be used and a system
-    in which it cannot be.
-  * Fields carrying a data classification of `personal` or above are reported
-    unless the decision explicitly acknowledges them, so using protected data
-    is always a deliberate act that appears in the diff.
+every rule states a `because` and leaving it off is a parse error, not a lint
+warning you can turn off. every decision has an `otherwise` so there is no
+input the system has no answer for and nothing recorded about why. `prohibited`
+factors get rejected at compile time if anything in the decision reads them,
+whether directly or through a factor, which is the difference between a policy
+saying a factor must not be used and a system where it cannot be. fields
+classified `personal` or worse get reported unless the decision acknowledges
+them, so using protected data is something somebody did on purpose and it shows
+up in the diff.
 
-Verdict lowers to ordinary Canon: a record type for the result, a function that
-computes the factors and evaluates the rules in order, and contracts asserting
-that the result always carries at least one reason and that every factor used
-is reported. Everything downstream -- the verifier, the capability analysis,
-the journal, the promotion gate -- then applies unchanged.
+it lowers to ordinary canon, a record type for the result, a function that
+works out the factors and runs the rules in order, and contracts saying the
+result always carries at least one reason and reports every factor it used.
+everything downstream, the verifier and the capability analysis and the journal
+and the gate, then works on it without knowing any of this happened.
 """
 
 from __future__ import annotations

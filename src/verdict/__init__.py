@@ -1,10 +1,10 @@
 """
-Verdict: a decision language for regulated logic.
+verdict, a decision language for regulated logic.
 
-A decision compiles only if it can explain itself: every rule states a reason,
+a decision only compiles if it can explain itself. every rule states a reason,
 every decision has a default, and prohibited factors are unreachable rather
-than merely unused. Verdict lowers to Canon, so the verifier, the capability
-analysis, the journal and the promotion gate all apply to it unchanged.
+than just unused. it lowers to canon so the verifier and the capability
+analysis and the journal and the gate all work on it already.
 """
 
 __version__ = "0.1.0"

@@ -1,19 +1,18 @@
 # Verdict
 
-A decision language for regulated logic. A decision compiles only if it can
+decision language for regulated logic. a decision will not compile unless it can
 explain itself.
 
-Part of the [Kinode](../kinode-stack) stack. Lowers to [Canon](../canon), so
-verification, capability analysis, journaling and the promotion gate apply
-unchanged.
+part of [kinode](../kinode-stack). lowers to [canon](../canon) so verification,
+capability analysis, journaling and the promotion gate already work on it.
 
-## Install
+## install
 
 ```sh
 pip install -e .
 ```
 
-## A decision
+## example
 
 ```verdict
 module underwriting
@@ -47,47 +46,47 @@ decision assess(input: Assessment) -> Ruling
     because "Does not meet the published criteria for an automatic decision."
 ```
 
-## What is enforced at compile time
+## constraints
 
-**Every rule states a reason.** Omitting `because` is a parse error, not a lint
-warning.
+every rule needs a `because` on it. leave it off and you get a parse error, not
+a warning you can ignore, because a decision you cannot explain to the person
+it was made about is not usable
 
-**Every decision has a default.** There is no input the decision cannot answer
-and no outcome without a recorded reason.
+every decision needs an `otherwise`. without one there are inputs the decision
+cannot answer at all and outcomes with nothing recorded about why
 
-**Every factor states why it is used.** A factor that cannot appear in an
-explanation is not usable in a regulated decision.
+every factor needs a `because` too. a factor that cannot go in the explanation
+is no use to you in a regulated decision
 
-**Prohibited factors are unreachable, not merely unused.** A field named in
-`prohibited` is rejected whether a rule reads it directly or reaches it through
-a factor, and the diagnostic names the route:
+prohibited fields are unreachable, not just unused. it does not matter whether a
+rule reads the field directly or gets at it through a factor, both get rejected
+and the error tells you which route it took
 
 ```
 error[CANON-E0903]: rule 'below_credit_floor' depends on a prohibited field
   fields: ['input.applicant.legal_name']
   via_factors: ['tenure']
-  note: A prohibited field reached through a factor is still a prohibited field.
 ```
 
-## What it produces
+## output
 
-For `decision assess(...) -> Ruling`, Verdict generates:
+`decision assess(...) -> Ruling` gives you
 
-- `record AssessResult { outcome: Ruling, reasons: List<Reason>, factors: List<Factor> }`
-  with an invariant that a result always carries at least one reason
-- `fn assess(...) -> AssessResult` — rules evaluated in written order
-- `fn assess_outcome(...) -> Ruling` — the outcome without the reasoning
-- contracts asserting every result carries a reason and reports every factor
-  considered, plus the `explains` and `deterministic` laws
+| generated | what it is |
+| --- | --- |
+| `record AssessResult` | outcome, reasons, factors, with an invariant that there is always at least one reason |
+| `fn assess(...)` | rules run in the order you wrote them |
+| `fn assess_outcome(...)` | just the outcome if you do not want the reasoning |
+| contracts | every result carries a reason and reports every factor, plus the `explains` and `deterministic` laws |
 
-At runtime every decision carries its reasoning:
+at runtime the reasoning comes back with it
 
 ```
 Decline: "The credit score is below the published floor of 560."
 factors: score=400 (w45), burden=2 (w35), tenure=120 (w20)
 ```
 
-## Usage
+## usage
 
 ```python
 from verdict import parse_verdict
@@ -97,19 +96,19 @@ mod, bag = parse_verdict(open("underwriting.verdict").read(), "underwriting.verd
 cr = check([mod], bag)
 ```
 
-Or through the command line, which dispatches on extension:
+or through the cli, it goes by extension
 
 ```sh
 canon check underwriting.verdict
 canon verify underwriting.verdict --runs 60
 ```
 
-## Tests
+## tests
 
 ```sh
 python tests/smoke_verdict.py
 ```
 
-## Licence
+## licence
 
-Apache-2.0. Copyright Kinode.
+Apache-2.0, Kinode.

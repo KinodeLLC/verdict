@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "verdict"
 version = "0.1.0"
-description = "Verdict: a decision-rule language for regulated logic. Every decision carries a machine-checkable reason tree."
+description = "decision language for regulated logic. a decision will not compile unless it can explain itself."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "Apache-2.0" }
