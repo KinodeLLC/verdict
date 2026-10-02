@@ -3,7 +3,7 @@
 decision language for regulated logic. a decision will not compile unless it can
 explain itself.
 
-part of [kinode](../kinode-stack). lowers to [canon](../canon) so verification,
+part of [kinode](https://github.com/KinodeLLC/kinode-stack). lowers to [canon](https://github.com/KinodeLLC/canon) so verification,
 capability analysis, journaling and the promotion gate already work on it.
 
 ## install
